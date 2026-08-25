@@ -64,7 +64,7 @@ Load the matching skill **before** the work. Do not re-derive the procedure from
 | `releasing-a-spec` | Given a spec to implement; iterating; validating; shipping |
 | `parallel-feature-work` | Two or more feature specs at once; separate implementer agents |
 | `using-git-worktrees` | Isolated checkout for a feat/ branch; parallel agents |
-| `playwright-e2e` | Browser user flows; flow CI job; test-server fakes |
+| `playwright-e2e` | Browser user flows; flow CI job; test-server fakes; empty-state reset between files |
 
 Handed a spec, or asked to implement/ship: `releasing-a-spec`. Two or more specs this session: `parallel-feature-work` first. Implementing any slice: `tdd-loop` then `logical-commits`. First edit of a spec: `github-ci-loop`. Isolated tree for a parallel agent: `using-git-worktrees`. Ready to merge: `spec-review-loop` (dispatches `.agents/agents/spec-reviewer/AGENT.md`). After merge: `post-merge-improvement`. Addressing comments: `receiving-code-review`. Browser flow tests: `playwright-e2e`. Spec changed a procedure: `writing-for-agents`.
 
