@@ -4,7 +4,8 @@ description: >
   Use when adding a feature, changing behavior, fixing a bug, writing or
   reviewing a pull request, when two spec bullets can conflict, when
   restating an AC while UI/Events/Assumptions still describe the old
-  behavior, when Restates omits a released spec that still describes
+  behavior, leftover locked claims in a restated system spec, when
+  Restates omits a released spec that still describes
   deleted behavior, when Restates names leftover files whose bullets
   were not rewritten, when leftover action POST remains after a deleted
   control, when a leftover test title still quotes a restated AC, when
@@ -40,7 +41,7 @@ Status on every spec: `draft` → `validated` → `released`.
 
 3. **Edit the spec first.** New or changed rules, events, primitives, seams, or terms go into the spec (and `CONTEXT.md` / other system specs they belong in). Extra visible chrome without an AC is a behavior change — add an AC first or omit it. A feature Domain terms line that names a word `CONTEXT.md` does not define is unfinished. When a spec forbids using a term as a visible title or field label, that term's `_Avoid_` lists title / field label. Do not add a Changelog section — the commit message is the history. If two bullets cannot both hold, write the resolution in the spec before `tdd-loop`. Silent drop is not a resolution.
 
-   Restating or deleting an AC is unfinished until UI, Events, Assumptions, Used by, every spec that AC restates, and the `it` / `test()` titles that quoted the old words no longer describe the deleted behavior. Search `docs/specs/` and `it("` / `test("` titles for the deleted words. Add every spec hit to Restates and rewrite the leftover bullets. Rename leftover test titles (`testing`). A leftover title that now includes the restated words must prove those words or drop them (`testing`). Listing a path in Restates without rewriting that file is unfinished. Completion of that search: grep for the deleted phrase is empty except the restated sentences; every Restates path now uses the new words; no leftover `it` / `test()` still quotes the old words.
+   Restating or deleting an AC is unfinished until UI, Events, Assumptions, Used by, every spec that AC restates, and the `it` / `test()` titles that quoted the old words no longer describe the deleted behavior. Search `docs/specs/` and `it("` / `test("` titles for the deleted words. Add every spec hit to Restates and rewrite the leftover bullets. Rename leftover test titles (`testing`). A leftover title that now includes the restated words must prove those words or drop them (`testing`). Listing a path in Restates without rewriting that file is unfinished. When Restates names a system spec, rewriting one phrase is unfinished until you grep that entire file for (a) phrases this slice's Out of scope names, (b) later-slice names still listed as current work, (c) locked claims in the restated sentences this HEAD does not implement. Rewrite each leftover locked claim, or add ACs that implement it. Completion of that search: grep for the deleted phrase is empty except the restated sentences; the restated system spec has no leftover locked claim this HEAD does not implement; every Restates path now uses the new words; no leftover `it` / `test()` still quotes the old words.
 
    Deleting a visible control is unfinished until the action no longer accepts that POST, or Out of scope names the leftover branch. Restate an exclusive script-name bound as the constructor file (and the scripts allowed to run it) so both specs still hold. A shippable operator command or npm script that changes persisted state is an acceptance criterion — Assumptions are environment facts, not a place to park the command. Completion: the spec describes the intended behavior, including clash cases; leftover sections of the same file agree; status is at least `draft`.
 
@@ -85,6 +86,7 @@ Status on every spec: `draft` → `validated` → `released`.
 - An AC is restated but UI / Events / Assumptions still describe the deleted behavior
 - Restates omits a released spec that still describes the deleted behavior
 - Restates names a leftover file whose bullets still use the deleted words
+- Restates names a system spec that still contains locked claims this HEAD does not implement
 - A deleted control still has an action POST the spec does not name
 - An AC is restated but a `test()` title still quotes the old words
 - Two numbered rules in the same spec cannot both hold

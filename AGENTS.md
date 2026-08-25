@@ -49,7 +49,7 @@ Load the matching skill **before** the work. Do not re-derive the procedure from
 
 | Skill | Reach for it when |
 |-------|-------------------|
-| `keeping-specs-current` | Any behavior change; suspected spec drift; leftover sections after restating an AC |
+| `keeping-specs-current` | Any behavior change; suspected spec drift; leftover sections after restating an AC; leftover locked claims in a restated system spec |
 | `writing-for-agents` | Editing AGENTS.md, skills, or agents; spec changed a procedure |
 | `domain-modeling` | New or conflicting domain term; CONTEXT.md; ADR |
 | `codebase-design` | Module shape, seam, adapter, depth |
