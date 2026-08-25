@@ -27,6 +27,7 @@ ingest → completeness → iterate until validated
   → after first green commit: open PR (CI starts)
   → local release gate
   → spec-review-loop until Approve + CI green
+      (does not end at a commit batch or a context limit)
   → merge → spec status=released → post-merge-improvement
 ```
 

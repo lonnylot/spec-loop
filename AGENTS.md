@@ -57,7 +57,7 @@ Load the matching skill **before** the work. Do not re-derive the procedure from
 | `tdd-loop` | Implementing or fixing; before production code; host-path constructor |
 | `logical-commits` | A criterion is green; deciding whether / what to commit; reconstruct after tests-after |
 | `github-ci-loop` | Starting work; branching; opening a PR; waiting on CI |
-| `spec-review-loop` | PR exists; merge/release |
+| `spec-review-loop` | PR exists; merge/release; resume after context compaction |
 | `post-merge-improvement` | PR just merged; learn from review into skills/docs |
 | `receiving-code-review` | Implementing or pushing back on review comments |
 | `verification-before-completion` | About to claim done, green, fixed, or released |
