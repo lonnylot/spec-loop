@@ -16,7 +16,7 @@ Before the first file edit for a spec or bug, from the current default branch:
 
 `feat/<spec-slug>` or `fix/<spec-slug>`
 
-One validated spec (or one bug) per branch. Do not implement on `main` / `master`. Two feat/ branches at once: `using-git-worktrees` so each agent has its own checkout (`parallel-feature-work`).
+One validated spec (or one bug) per branch. Do not implement on `main` / `master`. Every `spec-implementer` gets a worktree (`using-git-worktrees`). Two feat/ branches at once: one worktree per agent (`parallel-feature-work`). The orchestrator stays on the default branch and does not implement there.
 
 ## When to open the PR
 
@@ -40,7 +40,7 @@ If `.github/workflows/` is missing, add a workflow that runs the product's typec
 
 ## Merge
 
-Merge only from `spec-review-loop` after Approve + green CI + `releasing-a-spec` gate. Use the repository's default merge method.
+Merge only from `release-manager` after Approve + green CI + `releasing-a-spec` gate. Use the repository's default merge method. The orchestrator and `spec-implementer` do not merge.
 
 ## Rationalizations
 

@@ -2,15 +2,16 @@
 name: spec-review-loop
 description: >
   Use when a pull request exists, before merge or release, when addressing
-  review comments, resume after context compaction, or when a spec must
-  be iterated with a separate reviewer until it is approved and released.
+  review comments, resume after context compaction, resume spec-implementer
+  for review fixes, dispatch release-manager, or when a spec must be
+  iterated with a separate reviewer until it is approved and released.
 ---
 
 # Spec review loop
 
-A **separate** agent reviews the PR against the spec and the repo rules and leaves comments. You address them. Repeat until that agent Approves, CI is green, and the release gate is clean. Then merge and mark the spec `released`.
+A **separate** agent reviews the PR against the spec and the repo rules and leaves comments. The orchestrator loads this skill. Repeat until that agent Approves, CI is green, and the release gate is clean. Then dispatch `release-manager`.
 
-Same-context self-review does not count.
+Same-context self-review does not count. This session does not write production code and does not merge.
 
 ## When to start
 
@@ -21,39 +22,40 @@ Same-context self-review does not count.
 ## Loop
 
 ```
-dispatch spec-reviewer (fresh context)
+dispatch spec-reviewer (fresh context every time)
   → reviewer comments + verdict
-  → Changes requested: fix (tdd-loop + logical-commits) → push → wait CI
-  → reply on each thread with the fixing SHA (do not resolve)
-  → dispatch reviewer again on new HEAD
+  → Changes requested: resume spec-implementer (receiving-code-review)
+      → push → wait CI
+  → implementer replies on each thread with the fixing SHA (does not resolve)
+  → dispatch reviewer again on new HEAD (fresh context, same AGENT.md)
   → reviewer resolves fixed blocking threads and leftover notes (GitHub resolve_thread)
   → Approve only after get_review_comments shows those threads is_resolved: true
-  → Approve + CI green + release gate → merge
-  → update PR body with review-cycle count
-  → spec status=released
+  → Approve + CI green + release gate → dispatch release-manager
   → post-merge-improvement
 ```
 
 ### Resume
 
-The loop does not end at a batch of commits or a context limit. On resume, read the PR (`gh pr view` or the harness GitHub API), checks on this HEAD, and unresolved review threads, then continue until Approve on this HEAD + green CI + merge. Completion: those reads ran in this session before any "are we done?"; the three Release holds are true or the next loop step is in progress. Do not ask the user whether to keep going.
+The loop does not end at a batch of commits or a context limit. On resume, read the PR (`gh pr view` or the harness GitHub API), checks on this HEAD, and unresolved review threads, then continue until Approve on this HEAD + green CI and you have dispatched `release-manager`. Completion: those reads ran in this session before any "are we done?"; the three Release holds are true or the next loop step is in progress. Do not ask the user whether to keep going.
 
-### Dispatch
+### Dispatch reviewer
 
-Start an isolated agent (subagent, second session, or the harness fresh-context tool). Seed it with `.agents/agents/spec-reviewer/AGENT.md`. Give it only:
+Start an isolated agent (subagent, second session, or the harness fresh-context tool). Seed it with `.agents/agents/spec-reviewer/AGENT.md`. **Fresh context every dispatch** — do not resume the reviewer's transcript. Give it only:
 
 - Spec path(s) and the original task statement (verbatim)
 - Base SHA and HEAD SHA
 - PR number
 - That it must read `AGENTS.md` and the spec itself
 
-Do not pass your reasoning or a verdict of your own.
+Do not pass your reasoning, the implementer's reasoning, or a verdict of your own.
 
 ### Address comments
 
-Load `receiving-code-review`. For each **blocking** comment: confirm it against the spec and the code. If it is right, fix with `tdd-loop`, one `logical-commits` commit, push. If it is wrong, reply on the thread with the spec/code evidence; do not silently ignore it.
+Resume **the same** `spec-implementer` conversation for this spec (`.agents/agents/spec-implementer/AGENT.md`). Give it the blocking threads verbatim, PR number, and HEAD SHA. Do not fix production code in this session.
 
-Notes are optional. Unclear comments: ask on the thread before coding. Do not implement a batch while any blocking item is unclear.
+If that conversation is gone: new spawn of the same `AGENT.md`, seeded with spec path, PR, HEAD, worktree, blocking thread ids.
+
+The implementer loads `receiving-code-review`. Notes are optional. Unclear comments: the implementer returns a need-user question; take it to the user before resuming them. Do not implement a batch in the orchestrator while any blocking item is unclear.
 
 ### Re-review
 
@@ -69,14 +71,9 @@ Only when all three hold:
 2. GitHub checks green on HEAD
 3. `releasing-a-spec` gate still green
 
-Then merge the PR, set the spec (and catalog) to `released`, quote the merge SHA plus the check evidence, write the review-cycle count into the PR description, and run `post-merge-improvement`.
+Dispatch `.agents/agents/release-manager/AGENT.md` (fresh context) with spec path, PR number, expected HEAD SHA, owner/repo. Do not merge in this session. After it returns a merge SHA, run `post-merge-improvement`.
 
-**Review cycles** = number of spec-reviewer submissions whose body has a Verdict of Changes requested or Approve (each is one cycle). A same-user `COMMENT` that says treat it as Changes requested or Approve counts. Empty-body thread replies do not. Append (do not replace) a `## Review cycles` section to the PR body:
-
-```
-## Review cycles
-N (X Changes requested, Y Approve)
-```
+Review-cycle count is written by `release-manager`. The formula lives in that agent.
 
 ## Rationalizations
 
@@ -85,10 +82,11 @@ N (X Changes requested, Y Approve)
 | "I'll review my own diff" | Same context rubber-stamps. Dispatch the reviewer agent. |
 | "Comments are nits, merge" | Blocking comments are the bar. Notes may land later. |
 | "Reviewer approved yesterday" | Approve applies to a SHA. Re-review after new commits. |
-| "Human can squash later" | Merge is the release act. Do it only after the three holds. |
-| "Enough review rounds; hand off" | The loop ends on Approve + green CI + merge. Time and leftover notes are not an exit. |
+| "Human can squash later" | Merge is the release act. Dispatch `release-manager` only after the three holds. |
+| "I'll fix the comment here" | Resume `spec-implementer`. This session does not write production code. |
+| "Enough review rounds; hand off" | The loop ends on Approve + green CI + `release-manager`. Time and leftover notes are not an exit. |
 | "Should I keep going?" | Read the PR, checks, and threads this session. Resume. Do not ask. |
 
 ## Red flags
 
-Implementing in the reviewer role. Merging with Changes requested. Calling the spec `released` before the merge SHA exists. Implementer resolving review threads. Stopping the loop before Approve on this HEAD. Asking the user whether to keep going instead of reading the PR. Approving while leftover notes are still unresolved on the PR.
+Implementing in the reviewer role. Implementing in the orchestrator session. Merging in this session instead of dispatching `release-manager`. Merging with Changes requested. Calling the spec `released` before the merge SHA exists. Implementer resolving review threads. Stopping the loop before Approve on this HEAD. Asking the user whether to keep going instead of reading the PR. Approving while leftover notes are still unresolved on the PR. Resuming the spec-reviewer transcript.

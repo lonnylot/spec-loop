@@ -1,17 +1,18 @@
 ---
 name: using-git-worktrees
 description: >
-  Use when starting feature work that must not share a working tree, when
-  dispatching parallel feature agents, or when another skill needs an
-  isolated git worktree.
+  Use when dispatching spec-implementer, when starting feature work that
+  must not share a working tree, when dispatching parallel feature
+  agents, or when another skill needs an isolated git worktree.
 ---
 
 # Using git worktrees
 
-Two agents must not share one checkout. Each parallel spec gets its own worktree and `feat/<slug>` branch.
+Two agents must not share one checkout. Every `spec-implementer` gets its own worktree and `feat/<slug>` branch. The orchestrator stays on the default branch.
 
 ## When to use
 
+- Dispatching `spec-implementer` (`releasing-a-spec`) — including a single spec
 - Two or more `feat/` branches will be edited at once (`parallel-feature-work`)
 - A child agent would otherwise dirty the parent's tree
 - The harness offers a worktree isolation mode — use that first

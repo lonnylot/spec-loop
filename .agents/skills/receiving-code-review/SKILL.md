@@ -9,7 +9,7 @@ description: >
 
 Verify, then act. Do not performatively agree. Do not implement a comment you have not checked against this repo.
 
-This skill is for the **implementer**. The reviewer is `.agents/agents/spec-reviewer/AGENT.md` via `spec-review-loop`.
+This skill is for the **implementer** (`.agents/agents/spec-implementer/AGENT.md`). The orchestrator resumes that agent; it does not apply this skill in its own checkout. The reviewer is `.agents/agents/spec-reviewer/AGENT.md` via `spec-review-loop`.
 
 ## Pattern
 
