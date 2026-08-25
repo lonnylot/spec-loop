@@ -27,6 +27,7 @@ ingest → completeness → iterate until validated
   → after first green commit: open PR (CI starts)
   → local release gate
   → spec-review-loop until Approve + CI green
+      (does not end at a commit batch or a context limit)
   → merge → spec status=released → post-merge-improvement
 ```
 
@@ -38,7 +39,7 @@ Read the spec (or write `docs/specs/features/<slug>.md` from `_TEMPLATE.md` and 
 
 - [ ] Problem and out-of-scope are explicit
 - [ ] Acceptance criteria are testable and use `CONTEXT.md` terms. Every Domain terms word has a `CONTEXT.md` entry.
-- [ ] Operator commands / npm scripts that change persisted state are acceptance criteria, not Assumptions
+- [ ] Operator commands / npm scripts that change persisted state, and host-path construction of an architecture-named adapter, are acceptance criteria, not Assumptions
 - [ ] Seams named (architecture spec if the product has one; otherwise the module interface tests will call)
 - [ ] Events named or added if the product catalogs actions
 - [ ] UI screens/primitives named or added if the product inventories them

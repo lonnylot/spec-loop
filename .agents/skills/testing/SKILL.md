@@ -4,6 +4,8 @@ description: >
   Use when adding or placing tests, choosing seams, writing unit or
   Playwright tests, mapping acceptance criteria to tests, checking a
   weaker-reading fixture, splitting an "and" (any case) test name,
+  an early-return "and" that should stay one criterion,
+  a host-path constructor weaker fixture,
   proving a screen/shows criterion (not a source grep), leftover test
   filename after a deleted SUT, leftover test title after a restated
   AC, or updating a testing spec.
@@ -33,7 +35,7 @@ A criterion that names a screen, "shows", or "lists" is proven at the app or flo
 
 ## Steps
 
-1. **Quote the criterion.** Open the spec. Write the test name as the criterion. If that name contains "and" (any case) or independent env/branch cases, split into one `it` each. The assertion must fail a weaker implementation of those words.
+1. **Quote the criterion.** Open the spec. Write the test name as the criterion. If that name contains "and" (any case) or independent env/branch cases, split into one `it` each — only when the cases are independently revertible production (status vs content-type vs body; membership 404 vs happy path). Do not split an early-return reject (returns 400 and does not insert / does not put / leaves version N) into separate ACs if they share one production path: those are one criterion. If the next AC would be green without new production, fold the proof into this commit or do not split the bullet (`logical-commits`). The assertion must fail a weaker implementation of those words.
 
    Weaker readings this step exists to catch:
 
@@ -49,6 +51,7 @@ A criterion that names a screen, "shows", or "lists" is proven at the app or flo
    | Non-empty placeholder | `/placeholder=/` on `placeholder=""` |
    | One row's own text | Document-level `toContain` or `[\s\S]*` that can cross a tag |
    | Packed "and" | One `it` covering independent cases |
+   | Architecture-named production adapter | Injected runtime stays green if the host path never constructs it |
 
    When a production module is deleted, rename or delete its dedicated test file in the same change. When an AC is restated, rename the `it` / `test()` that quoted the old words. Renaming is unfinished until that leftover test's assertions fail a weaker reading of the new words, or the leftover title drops the new words. A restated "does not show X" inverts the assertion (`not.toContain`); dropping `toContain` is not the proof. Completion: deleting the feature, or swapping in the weaker algorithm, fails this test for that reason.
 

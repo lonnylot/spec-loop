@@ -2,8 +2,8 @@
 name: spec-review-loop
 description: >
   Use when a pull request exists, before merge or release, when addressing
-  review comments, or when a spec must be iterated with a separate reviewer
-  until it is approved and released.
+  review comments, resume after context compaction, or when a spec must
+  be iterated with a separate reviewer until it is approved and released.
 ---
 
 # Spec review loop
@@ -33,6 +33,10 @@ dispatch spec-reviewer (fresh context)
   → spec status=released
   → post-merge-improvement
 ```
+
+### Resume
+
+The loop does not end at a batch of commits or a context limit. On resume, read the PR (`gh pr view` or the harness GitHub API), checks on this HEAD, and unresolved review threads, then continue until Approve on this HEAD + green CI + merge. Completion: those reads ran in this session before any "are we done?"; the three Release holds are true or the next loop step is in progress. Do not ask the user whether to keep going.
 
 ### Dispatch
 
@@ -83,7 +87,8 @@ N (X Changes requested, Y Approve)
 | "Reviewer approved yesterday" | Approve applies to a SHA. Re-review after new commits. |
 | "Human can squash later" | Merge is the release act. Do it only after the three holds. |
 | "Enough review rounds; hand off" | The loop ends on Approve + green CI + merge. Time and leftover notes are not an exit. |
+| "Should I keep going?" | Read the PR, checks, and threads this session. Resume. Do not ask. |
 
 ## Red flags
 
-Implementing in the reviewer role. Merging with Changes requested. Calling the spec `released` before the merge SHA exists. Implementer resolving review threads. Stopping the loop before Approve on this HEAD. Approving while leftover notes are still unresolved on the PR.
+Implementing in the reviewer role. Merging with Changes requested. Calling the spec `released` before the merge SHA exists. Implementer resolving review threads. Stopping the loop before Approve on this HEAD. Asking the user whether to keep going instead of reading the PR. Approving while leftover notes are still unresolved on the PR.

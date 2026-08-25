@@ -8,7 +8,7 @@ One paragraph: who, what, why.
 
 ## Acceptance criteria
 
-Testable bullets. Each becomes one test name. One behavior per bullet; "and" (any case) means split (`testing`). Restating a bullet renames that test. A leftover title that now includes the restated words must assert those words (or drop them from the leftover title).
+Testable bullets. Each becomes one test name. One behavior per bullet; "and" (any case) means split unless the cases share one early return (`testing`). Restating a bullet renames that test. A leftover title that now includes the restated words must assert those words (or drop them from the leftover title).
 
 - [ ] …
 
@@ -30,7 +30,7 @@ If the product inventories screens and primitives (design-system spec): screens 
 
 ## Assumptions
 
-Environment facts (hostname, test adapter, platform flags). A shippable operator command or npm script that changes persisted state is an acceptance criterion so `tdd-loop` can name it — do not park it here.
+Environment facts (hostname, test adapter, platform flags). A shippable operator command or npm script that changes persisted state, or host-path construction of an architecture-named adapter, is an acceptance criterion so `tdd-loop` can name it — do not park it here.
 
 ## Out of scope
 
@@ -38,4 +38,4 @@ Explicit non-goals.
 
 ## Restates
 
-Released specs whose bullets this change rewrites. Listing a path without rewriting that file is unfinished.
+Released specs whose bullets this change rewrites. Listing a path without rewriting that file is unfinished. When Restates names a system spec, leftover locked claims this HEAD does not implement are rewritten or given ACs (`keeping-specs-current`).

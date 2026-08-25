@@ -49,22 +49,22 @@ Load the matching skill **before** the work. Do not re-derive the procedure from
 
 | Skill | Reach for it when |
 |-------|-------------------|
-| `keeping-specs-current` | Any behavior change; suspected spec drift; leftover sections after restating an AC |
+| `keeping-specs-current` | Any behavior change; suspected spec drift; leftover sections after restating an AC; leftover locked claims in a restated system spec; host-path construction parked in Assumptions |
 | `writing-for-agents` | Editing AGENTS.md, skills, or agents; spec changed a procedure |
 | `domain-modeling` | New or conflicting domain term; CONTEXT.md; ADR |
 | `codebase-design` | Module shape, seam, adapter, depth |
-| `testing` | Test placement, seams, mapping criteria, weaker-reading fixtures |
-| `tdd-loop` | Implementing or fixing; before production code |
-| `logical-commits` | A criterion is green; deciding whether / what to commit |
-| `github-ci-loop` | Starting work; branching; opening a PR; waiting on CI |
-| `spec-review-loop` | PR exists; merge/release |
+| `testing` | Test placement, seams, mapping criteria, weaker-reading fixtures, early-return "and" that should stay one criterion |
+| `tdd-loop` | Implementing or fixing; before production code; host-path constructor |
+| `logical-commits` | A criterion is green; deciding whether / what to commit; reconstruct after tests-after |
+| `github-ci-loop` | Starting work; branching; opening a PR; waiting on CI; checks never started |
+| `spec-review-loop` | PR exists; merge/release; resume after context compaction |
 | `post-merge-improvement` | PR just merged; learn from review into skills/docs |
 | `receiving-code-review` | Implementing or pushing back on review comments |
 | `verification-before-completion` | About to claim done, green, fixed, or released |
 | `releasing-a-spec` | Given a spec to implement; iterating; validating; shipping |
 | `parallel-feature-work` | Two or more feature specs at once; separate implementer agents |
 | `using-git-worktrees` | Isolated checkout for a feat/ branch; parallel agents |
-| `playwright-e2e` | Browser user flows; flow CI job; test-server fakes |
+| `playwright-e2e` | Browser user flows; flow CI job; test-server fakes; empty-state reset between files |
 
 Handed a spec, or asked to implement/ship: `releasing-a-spec`. Two or more specs this session: `parallel-feature-work` first. Implementing any slice: `tdd-loop` then `logical-commits`. First edit of a spec: `github-ci-loop`. Isolated tree for a parallel agent: `using-git-worktrees`. Ready to merge: `spec-review-loop` (dispatches `.agents/agents/spec-reviewer/AGENT.md`). After merge: `post-merge-improvement`. Addressing comments: `receiving-code-review`. Browser flow tests: `playwright-e2e`. Spec changed a procedure: `writing-for-agents`.
 
