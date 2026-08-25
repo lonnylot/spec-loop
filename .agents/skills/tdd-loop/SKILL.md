@@ -3,8 +3,8 @@ name: tdd-loop
 description: >
   Use when implementing any feature or bugfix, before writing production
   code, when adding an operator CLI or npm script that changes persisted
-  state, or when the user mentions TDD, red-green-refactor, the build
-  loop, or looping.
+  state, a host-path constructor, or when the user mentions TDD,
+  red-green-refactor, the build loop, or looping.
 ---
 
 # TDD loop
@@ -25,7 +25,7 @@ Always for features, fixes, and behavior changes. Exceptions only if the human s
 
 1. **Criterion.** One independent behavior from a `validated` spec bullet (or `draft` only while exploring a test that you will throw away). If the bullet contains "and" (any case) or independent env/branch cases, split — one `it` per case — unless they share one early return (`testing`). Completion: test title is that one behavior, not the packed paragraph.
 
-2. **RED.** Load `testing`. Write one failing test at the seam the testing spec (or this pack's default layers) names. If the criterion is a browser flow, that test is Playwright (`playwright-e2e`) and lands with that production (`logical-commits`). Run it. Completion: it fails because the behavior is missing, not because of a typo; the assertion would also fail a weaker reading of the criterion (that skill). If it passes, or if swapping in the weaker algorithm would still pass, you tested existing behavior — fix the test.
+2. **RED.** Load `testing`. Write one failing test at the seam the testing spec (or this pack's default layers) names. If the criterion is a browser flow, that test is Playwright (`playwright-e2e`) and lands with that production (`logical-commits`). After an AC that names a persistence or mail adapter the architecture names, the RED test must fail if the documented composition root (host `fetch` / `listen` / equivalent) never constructs that adapter. Injecting the runtime is not that proof (`testing`). Copying the constructor identifier into source is a parse test (`testing`). Run it. Completion: it fails because the behavior is missing, not because of a typo; the assertion would also fail a weaker reading of the criterion (that skill); deleting the host-path constructor would fail this test. If it passes, or if swapping in the weaker algorithm would still pass, you tested existing behavior — fix the test.
 
 3. **GREEN.** Smallest code that passes that test. No extra branches, events, or UI. Extra chrome without an AC is `keeping-specs-current`. A leftover POST that skips the new path is an extra branch — delete it or name it Out of scope (`keeping-specs-current`). Run the test (and neighbors you touched). Completion: the test passes; output is clean.
 
