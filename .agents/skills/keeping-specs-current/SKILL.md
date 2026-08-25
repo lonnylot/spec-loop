@@ -11,6 +11,7 @@ description: >
   control, when a leftover test title still quotes a restated AC, when
   a Domain terms line names a word CONTEXT.md does not define, when
   tightening a fake or test-double parse, when adding an operator CLI,
+  host-path construction of an architecture-named adapter,
   or whenever CONTEXT.md, docs/specs, or docs/adr may be missing or stale.
 ---
 
@@ -43,7 +44,7 @@ Status on every spec: `draft` → `validated` → `released`.
 
    Restating or deleting an AC is unfinished until UI, Events, Assumptions, Used by, every spec that AC restates, and the `it` / `test()` titles that quoted the old words no longer describe the deleted behavior. Search `docs/specs/` and `it("` / `test("` titles for the deleted words. Add every spec hit to Restates and rewrite the leftover bullets. Rename leftover test titles (`testing`). A leftover title that now includes the restated words must prove those words or drop them (`testing`). Listing a path in Restates without rewriting that file is unfinished. When Restates names a system spec, rewriting one phrase is unfinished until you grep that entire file for (a) phrases this slice's Out of scope names, (b) later-slice names still listed as current work, (c) locked claims in the restated sentences this HEAD does not implement. Rewrite each leftover locked claim, or add ACs that implement it. Completion of that search: grep for the deleted phrase is empty except the restated sentences; the restated system spec has no leftover locked claim this HEAD does not implement; every Restates path now uses the new words; no leftover `it` / `test()` still quotes the old words.
 
-   Deleting a visible control is unfinished until the action no longer accepts that POST, or Out of scope names the leftover branch. Restate an exclusive script-name bound as the constructor file (and the scripts allowed to run it) so both specs still hold. A shippable operator command or npm script that changes persisted state is an acceptance criterion — Assumptions are environment facts, not a place to park the command. Completion: the spec describes the intended behavior, including clash cases; leftover sections of the same file agree; status is at least `draft`.
+   Deleting a visible control is unfinished until the action no longer accepts that POST, or Out of scope names the leftover branch. Restate an exclusive script-name bound as the constructor file (and the scripts allowed to run it) so both specs still hold. A shippable operator command or npm script that changes persisted state, or host-path construction of an architecture-named adapter, is an acceptance criterion — Assumptions are environment facts, not a place to park the command or the wiring. Completion: the spec describes the intended behavior, including clash cases; leftover sections of the same file agree; status is at least `draft`.
 
 4. **Implement via `tdd-loop`.** Do not start production code until step 3 is done and, for ship work, `releasing-a-spec` has marked the spec `validated`.
 
@@ -82,6 +83,7 @@ Status on every spec: `draft` → `validated` → `released`.
 - A Domain terms line names a word `CONTEXT.md` does not define
 - Catalog has no row for a new feature file
 - A new operator CLI or npm script lives only under Assumptions
+- Host-path construction of an architecture-named adapter lives only under Assumptions
 - Exclusive "only script X" wording still stands after a second script calls the same constructor
 - An AC is restated but UI / Events / Assumptions still describe the deleted behavior
 - Restates omits a released spec that still describes the deleted behavior
