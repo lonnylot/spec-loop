@@ -8,7 +8,7 @@ One paragraph: who, what, why.
 
 ## Acceptance criteria
 
-Testable bullets. Each becomes one test name. One behavior per bullet; "and" (any case) means split (`testing`). Restating a bullet renames that test. A leftover title that now includes the restated words must assert those words (or drop them from the leftover title).
+Testable bullets. Each becomes one test name. One behavior per bullet; "and" (any case) means split unless the cases share one early return (`testing`). Restating a bullet renames that test. A leftover title that now includes the restated words must assert those words (or drop them from the leftover title).
 
 - [ ] …
 

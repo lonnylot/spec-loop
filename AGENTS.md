@@ -53,7 +53,7 @@ Load the matching skill **before** the work. Do not re-derive the procedure from
 | `writing-for-agents` | Editing AGENTS.md, skills, or agents; spec changed a procedure |
 | `domain-modeling` | New or conflicting domain term; CONTEXT.md; ADR |
 | `codebase-design` | Module shape, seam, adapter, depth |
-| `testing` | Test placement, seams, mapping criteria, weaker-reading fixtures |
+| `testing` | Test placement, seams, mapping criteria, weaker-reading fixtures, early-return "and" that should stay one criterion |
 | `tdd-loop` | Implementing or fixing; before production code |
 | `logical-commits` | A criterion is green; deciding whether / what to commit |
 | `github-ci-loop` | Starting work; branching; opening a PR; waiting on CI |
