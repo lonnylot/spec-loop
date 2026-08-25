@@ -4,7 +4,8 @@ description: >
   Use when a spec criterion goes green, when finishing a slice, before
   opening or updating a pull request, when deciding whether to commit,
   when grouping by screen, when independently revertible ACs share a
-  commit, when a spec-only commit lists every AC, or when a dedicated
+  commit, when a spec-only commit lists every AC, reconstruct after
+  tests-after already landed, or when a dedicated
   test or Playwright flow would land after its production.
 ---
 
@@ -35,6 +36,8 @@ One commit is one finished thought: one spec criterion (or one review/CI fix) wi
 2. Message names the criterion or review thread: `feat(orders): total stays within ±5%`.
 3. Commit spec + tests + production code together. Completion: `git show --stat` lists all three when all three changed. A later test-only commit for a criterion whose production already landed is tests-after — not a logical slice. A Playwright flow (or any dedicated test) in a later commit than the production that implemented that criterion is the same miss, even after the PR is open.
 
+   If tests-after already landed, do not add another test-only commit. If the test commit is already the next commit, fixup onto the production commit. If it is not consecutive, do not cherry-pick the old patch (end-of-file `it()` context will conflict): from current HEAD, append that `it()` onto the production commit, then drop the later test-only commit. A subject that names two ACs with "and" is two commits; each still needs its production hunk. Completion: `git log -p` shows that criterion's test in the same commit as its production; no follow-up on top of HEAD "folds" tests-after.
+
 Prefer conventional prefixes (`feat`, `fix`, `docs`, `test`, `refactor`, `chore`). The subject (and body if needed) states what changed. Specs do not keep a Changelog section.
 
 ## Rationalizations
@@ -46,7 +49,8 @@ Prefer conventional prefixes (`feat`, `fix`, `docs`, `test`, `refactor`, `chore`
 | "Spec in a follow-up commit" | Same-commit spec update is the iron law. |
 | "One screen is one commit" | Grouping by screen is the miss. Split independently revertible ACs. |
 | "Spec first, then one feat" | Spec hunk lands with the first production that implements it. |
+| "I'll fold tests-after in a follow-up on top of HEAD" | Reconstruct into the production commit. A follow-up cannot un-do tests-after. |
 
 ## Red flags
 
-Empty or "WIP" messages on a PR. Default-branch commits for a feature. Code committed without the spec hunk that describes it. Dedicated tests in a follow-up commit after the production that needed them. One commit that ships several independent ACs together. A commit subject that names two new ACs with "and". Spec-only then one feat. Grouped by screen.
+Empty or "WIP" messages on a PR. Default-branch commits for a feature. Code committed without the spec hunk that describes it. Dedicated tests in a follow-up commit after the production that needed them. A follow-up on top of HEAD to "fold" tests-after. One commit that ships several independent ACs together. A commit subject that names two new ACs with "and". Spec-only then one feat. Grouped by screen.
