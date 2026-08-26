@@ -1,9 +1,11 @@
 ---
 name: spec-implementer
 description: >
-  Use when spawned or resumed as the coding agent for one validated spec.
-  Implements criteria via tdd-loop, commits, opens the PR. Does not
-  review, merge, or work in the orchestrator's checkout.
+  Use when spawned or resumed as the coding agent for one validated spec,
+  an unmergeable PR, a rebase onto default, or a merge conflict on that
+  spec's feat/ branch. Implements criteria via tdd-loop, commits, opens
+  the PR, rebases. Does not review, merge, or work in the orchestrator's
+  checkout.
 ---
 
 # Spec implementer
@@ -22,7 +24,8 @@ On **resume** (same conversation, same spec), also:
 
 - PR number
 - HEAD SHA
-- Blocking review thread ids and their required fixes (verbatim)
+- Blocking review thread ids and their required fixes (verbatim), **or**
+- Rebase onto current default (unmergeable PR / sibling merge landed)
 
 If the spec is not `validated`, or the worktree path is missing, stop and return that. Do not implement on the default branch. Do not invent a second spec (`parallel-feature-work`).
 
@@ -42,9 +45,20 @@ If a completeness box is now no, or you need a user decision: stop and return. D
 
 ## Resume (same spec)
 
-Do not start a new conversation for this spec while this one exists. Load `receiving-code-review`. For each **blocking** comment: confirm it against the spec and the code. If it is right, fix with `tdd-loop`, one `logical-commits` commit, push. Reply on the thread with the fixing SHA. Do **not** resolve threads. If it is wrong, reply with spec/code evidence.
+Do not start a new conversation for this spec while this one exists.
 
-Unclear comments: return the question to the orchestrator. Do not implement a batch while any blocking item is unclear.
+**Review comments:** load `receiving-code-review`. For each **blocking** comment: confirm it against the spec and the code. If it is right, fix with `tdd-loop`, one `logical-commits` commit, push. Reply on the thread with the fixing SHA. Do **not** resolve threads. If it is wrong, reply with spec/code evidence. Unclear comments: return the question to the orchestrator. Do not implement a batch while any blocking item is unclear.
+
+**Unmergeable / sibling merged:** run **Rebase onto default**. Do not skip it because Approve already happened — that Approve is on the old SHA.
+
+## Rebase onto default
+
+The algorithm for conflicts lives here. Orchestrator and `release-manager` do not resolve production or spec-AC hunks.
+
+1. In the worktree, `git fetch` the default branch (read the name from the repo; do not cache `main`). Rebase this `feat/` onto that tip. Completion: rebase in progress or already clean.
+2. On each conflict: keep both specs' intents. Do not add behavior neither spec asked for. If two bullets cannot both hold, stop and return `need-user` (`keeping-specs-current`). Do not `--abort` unless the user said to stop.
+3. Finish the rebase. Run the product's test scripts. A criterion that disappeared is RED — `tdd-loop`, do not delete the test to make the merge green.
+4. Push (`--force-with-lease` after a rebase). Completion: Return block has the **new** HEAD SHA. `spec-review-loop` must re-dispatch a fresh `spec-reviewer` on that SHA.
 
 ## Return (every handoff)
 
@@ -62,4 +76,4 @@ Completion: the orchestrator can resume you from that block without a summary of
 
 ## You do not
 
-Implement in the orchestrator's checkout. Dispatch `spec-reviewer` or `release-manager`. Merge. Resolve review threads. Pass your self-assessment to a reviewer (the orchestrator seeds the reviewer; you do not).
+Implement in the orchestrator's checkout. Dispatch `spec-reviewer` or `release-manager`. Merge. Resolve review threads. Pass your self-assessment to a reviewer (the orchestrator seeds the reviewer; you do not). Leave an unmergeable PR for `release-manager` to "just merge."

@@ -137,7 +137,7 @@ flowchart TB
   A1 --> REV["parent: spec-review-loop"]
   A2 --> REV
   REV --> MERGEA["release-manager in recorded wave order"]
-  MERGEA --> REBASE["Remaining worktrees rebase onto default"]
+  MERGEA --> REBASE["Resume remaining spec-implementers<br/>rebase onto default"]
 ```
 
 ## Who does what
@@ -163,7 +163,7 @@ Load the matching skill **before** the work.
 | `writing-for-agents` | Editing `AGENTS.md`, skills, or named agents; a spec changed a procedure |
 | `tdd-loop` | Implementing or fixing; before production code |
 | `logical-commits` | A criterion is green; deciding whether / what to commit |
-| `github-ci-loop` | Starting work; branching; opening a PR; waiting on CI |
+| `github-ci-loop` | Starting work; branching; opening a PR; waiting on CI; unmergeable PR |
 | `spec-review-loop` | PR exists; resume implementer for review fixes; dispatch release-manager |
 | `receiving-code-review` | Reviewer or human left comments |
 | `post-merge-improvement` | PR just merged; learn from review into skills/docs |

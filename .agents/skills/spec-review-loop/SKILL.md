@@ -3,8 +3,9 @@ name: spec-review-loop
 description: >
   Use when a pull request exists, before merge or release, when addressing
   review comments, resume after context compaction, resume spec-implementer
-  for review fixes, dispatch release-manager, or when a spec must be
-  iterated with a separate reviewer until it is approved and released.
+  for review fixes, an unmergeable PR, rebase onto default voids Approve,
+  dispatch release-manager, or when a spec must be iterated with a
+  separate reviewer until it is approved and released.
 ---
 
 # Spec review loop
@@ -31,6 +32,7 @@ dispatch spec-reviewer (fresh context every time)
   → reviewer resolves fixed blocking threads and leftover notes (GitHub resolve_thread)
   → Approve only after get_review_comments shows those threads is_resolved: true
   → Approve + CI green + release gate → dispatch release-manager
+      (unmergeable → resume spec-implementer rebase → fresh reviewer)
   → post-merge-improvement
 ```
 
@@ -59,7 +61,7 @@ The implementer loads `receiving-code-review`. Notes are optional. Unclear comme
 
 ### Re-review
 
-Re-dispatch on the new HEAD after CI is green. The reviewer must Approve **this** SHA. An Approve on an old SHA is void.
+Re-dispatch on the new HEAD after CI is green. The reviewer must Approve **this** SHA. An Approve on an old SHA is void. A rebase onto default (or any merge from default) is a new HEAD — re-dispatch a **fresh** `spec-reviewer`; do not treat the prior Approve as still valid.
 
 After the reviewer reports Approve, read `get_review_comments`. If any thread that is not still blocking has `is_resolved: false`, the review is incomplete — send the reviewer back to `resolve_thread`. A COMMENT that says "Resolving" is not enough.
 
@@ -71,7 +73,7 @@ Only when all three hold:
 2. GitHub checks green on HEAD
 3. `releasing-a-spec` gate still green
 
-Dispatch `.agents/agents/release-manager/AGENT.md` (fresh context) with spec path, PR number, expected HEAD SHA, owner/repo. Do not merge in this session. After it returns a merge SHA, run `post-merge-improvement`.
+Dispatch `.agents/agents/release-manager/AGENT.md` (fresh context) with spec path, PR number, expected HEAD SHA, owner/repo. Do not merge in this session. If it returns `hold failed: unmergeable`, resume `spec-implementer` to rebase onto default, wait CI, then re-dispatch a fresh `spec-reviewer` on the new HEAD. After `release-manager` returns a merge SHA, run `post-merge-improvement`.
 
 Review-cycle count is written by `release-manager`. The formula lives in that agent.
 
@@ -84,6 +86,7 @@ Review-cycle count is written by `release-manager`. The formula lives in that ag
 | "Reviewer approved yesterday" | Approve applies to a SHA. Re-review after new commits. |
 | "Human can squash later" | Merge is the release act. Dispatch `release-manager` only after the three holds. |
 | "I'll fix the comment here" | Resume `spec-implementer`. This session does not write production code. |
+| "I'll resolve the merge conflict here" | Resume `spec-implementer` to rebase. Rebase is coding. |
 | "Enough review rounds; hand off" | The loop ends on Approve + green CI + `release-manager`. Time and leftover notes are not an exit. |
 | "Should I keep going?" | Read the PR, checks, and threads this session. Resume. Do not ask. |
 

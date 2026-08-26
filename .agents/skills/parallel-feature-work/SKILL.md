@@ -32,7 +32,7 @@ Do **not** parallelize when one spec's acceptance criteria name the other's UI o
 
 5. **Catalog and shared specs.** Children update only their `docs/specs/features/<slug>.md`. The parent (or the first merge) updates `docs/specs/README.md` status flips after each merge. Two children must not both rewrite the same system spec hunk — put the shared rule in before dispatch. Completion: `git diff` on each PR does not fight over the same catalog lines.
 
-6. **Integrate.** Dispatch `release-manager` in the wave's recorded order. After each merge, remaining worktrees rebase onto default. Then the next wave. Completion: every slug is `released` or still queued.
+6. **Integrate.** Dispatch `release-manager` in the wave's recorded order. After each merge, **resume** each remaining `spec-implementer` to rebase onto default (that agent's Rebase onto default). The orchestrator does not rebase production in its tree. Then the next wave. Completion: every remaining Return has a new HEAD on current default, or that slug is `released`.
 
 ## Rationalizations
 

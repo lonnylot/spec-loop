@@ -56,8 +56,8 @@ Load the matching skill **before** the work. Do not re-derive the procedure from
 | `testing` | Test placement, seams, mapping criteria, weaker-reading fixtures, early-return "and" that should stay one criterion |
 | `tdd-loop` | Implementing or fixing; before production code; host-path constructor; orchestrator about to write production code |
 | `logical-commits` | A criterion is green; deciding whether / what to commit; reconstruct after tests-after |
-| `github-ci-loop` | Starting work; branching; opening a PR; waiting on CI; checks never started |
-| `spec-review-loop` | PR exists; merge/release; resume after context compaction |
+| `github-ci-loop` | Starting work; branching; opening a PR; waiting on CI; checks never started; unmergeable PR; rebase onto default |
+| `spec-review-loop` | PR exists; merge/release; resume after context compaction; rebase voids Approve |
 | `post-merge-improvement` | PR just merged; learn from review into skills/docs |
 | `receiving-code-review` | Implementing or pushing back on review comments |
 | `verification-before-completion` | About to claim done, green, fixed, or released |
@@ -77,7 +77,7 @@ Full procedure is in the skills above. The always-on rule:
 3. Implementer: one logical commit per green criterion (spec + tests + code). Open a PR after the first green commit so CI runs on every push.
 4. Orchestrator: dispatch a **separate** `spec-reviewer` on a **fresh** context every time. Same-session self-review does not count. Changes requested → resume the implementer (`receiving-code-review`).
 5. Repeat until **Approve** on this HEAD + green checks. Approve is incomplete until leftover review threads are GitHub-resolved (`is_resolved: true`), not just replied.
-6. Dispatch `release-manager` to merge, write review-cycle count, and set the spec `released`. Then `post-merge-improvement`.
+6. Dispatch `release-manager` to merge, write review-cycle count, and set the spec `released`. Unmergeable: resume `spec-implementer` to rebase onto default, then a fresh `spec-reviewer` (Approve is this HEAD). Then `post-merge-improvement`.
 
 ## Invariants
 
@@ -99,4 +99,5 @@ Full procedure is in the skills above. The always-on rule:
 | "I'll just implement in this session" | Dispatch `spec-implementer`. The orchestrator does not write production code. |
 | "I'll review my own PR" | Dispatch `spec-reviewer`. Same context is not a review. |
 | "I'll merge it myself" | Dispatch `release-manager`. |
+| "I'll just resolve the conflict here" | Resume `spec-implementer`. Rebase is coding. |
 | "Local is green, skip CI" | GitHub checks on the PR are the shared gate. |

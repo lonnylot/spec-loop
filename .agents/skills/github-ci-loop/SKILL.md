@@ -2,7 +2,8 @@
 name: github-ci-loop
 description: >
   Use when starting feature work, creating a branch, opening or updating a
-  GitHub pull request, waiting on CI, checks never started, or when
+  GitHub pull request, waiting on CI, checks never started, an unmergeable
+  PR, rebase onto default, a merge conflict on a feat/ branch, or when
   local tests are green and the change must run on GitHub.
 ---
 
@@ -42,6 +43,8 @@ If `.github/workflows/` is missing, add a workflow that runs the product's typec
 
 Merge only from `release-manager` after Approve + green CI + `releasing-a-spec` gate. Use the repository's default merge method. The orchestrator and `spec-implementer` do not merge.
 
+If the PR is unmergeable onto default, resume `spec-implementer` to rebase (`spec-implementer` Rebase onto default). Do not resolve production or spec-AC hunks in the orchestrator session or in `release-manager`. Completion: the implementer's Return has a new HEAD SHA that is mergeable, or `need-user`.
+
 ## Rationalizations
 
 | Excuse | Reality |
@@ -50,6 +53,7 @@ Merge only from `release-manager` after Approve + green CI + `releasing-a-spec` 
 | "I'll branch when it's done" | Work on the default branch has no CI loop. |
 | "CI is flaky, merge anyway" | Quarantine with a failing test or fix the workflow. |
 | "No checks; empty commit to retrigger" | Read `on:` and permissions first. Empty commit is last resort, not a criterion. |
+| "I'll resolve the conflict in this session" | Resume `spec-implementer`. Rebase is coding. |
 
 ## Tooling
 
