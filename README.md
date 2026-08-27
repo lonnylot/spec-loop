@@ -107,7 +107,7 @@ flowchart TD
   MERGE --> RELEASED["Catalog status → released"]
   RELEASED --> PMI["post-merge-improvement"]
   PMI --> IMPROVER["Named agent: post-merge-improver"]
-  IMPROVER --> LEARN["Count review cycles<br/>harvest misses<br/>fix the one home"]
+  IMPROVER --> LEARN["Harvest misses<br/>fix the one home"]
 ```
 
 ## Inside one criterion

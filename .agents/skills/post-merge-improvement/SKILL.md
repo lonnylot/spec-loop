@@ -1,9 +1,8 @@
 ---
 name: post-merge-improvement
 description: >
-  Use after a pull request is merged, when updating a PR description with
-  review-cycle count, or when turning review feedback into skill and spec
-  fixes.
+  Use after a pull request is merged, or when turning review feedback into
+  skill and spec fixes.
 ---
 
 # Post-merge improvement
@@ -26,6 +25,6 @@ Skip when the merged PR only changed `.agents/`, `AGENTS.md`, or docs/specs with
 
 ## Completion
 
-- PR body of the **merged** product PR has `## Review cycles` with every spec-reviewer Verdict counted (same-user `COMMENT` with Changes requested or Approve counts; empty-body thread replies do not)
+- The merged product PR already has `## Review cycles` from `release-manager`. Do not write or correct the count here.
 - Each harvested miss has a skill, spec, or `AGENTS.md` pointer change (or a written reason it was already prevented and you fixed discovery)
 - Learning commits are small and named after the miss they close
