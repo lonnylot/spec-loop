@@ -29,7 +29,7 @@ Two agents must not share one checkout. Every `spec-implementer` gets its own wo
 
    Then `cd` there and run whatever the product defines for install. Completion: the worktree is on `feat/<slug>` and is not the parent's cwd.
 
-4. **Baseline.** Run the product's `test` script. Completion: exit 0, or you stop and report a dirty baseline.
+4. **Baseline.** Run the product's `test` script. If that script starts a TCP server, bind a checkout-unique port (`playwright-e2e`). Completion: exit 0, or you stop and report a dirty baseline.
 
 Do not `git worktree add` when the harness already created isolation (spawn `isolation: worktree`, or equivalent). Do not commit `.worktrees/` contents.
 
