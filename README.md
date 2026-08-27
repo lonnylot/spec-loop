@@ -11,7 +11,7 @@ It is not a framework, a hosted service, or a stack. The product still owns its 
 | Piece | Purpose |
 |-------|---------|
 | **Skills** (`.agents/skills/`) | Procedures the working agent loads: specs, TDD, commits, CI, review, tests, modules |
-| **Named agents** (`.agents/agents/`) | Fresh-context roles: `spec-reviewer`, `post-merge-improver` |
+| **Named agents** (`.agents/agents/`) | Resume `spec-implementer` per spec; fresh `spec-reviewer`, `release-manager`, `post-merge-improver` each dispatch |
 | **Always-on** (`AGENTS.md`) | Iron laws + skill index. Fill in the product one-liner |
 | **Spec tree** | `CONTEXT.md` stub, spec catalog, feature template, ADR home |
 
@@ -147,7 +147,7 @@ flowchart TB
 | Orchestrator | `releasing-a-spec`, `spec-review-loop` | Validate the spec with the user. Dispatch and resume agents. Does not write production code or merge |
 | `spec-implementer` | named agent | TDD, commits, PR, review fixes. One spec, one worktree, one conversation to resume |
 | `spec-reviewer` | named agent | Read spec + diff, comment, Approve or Changes requested. Fresh context every dispatch. Does not implement |
-| `release-manager` | named agent | Merge after the three holds. Catalog `released`. Review-cycle count. Does not implement or review |
+| `release-manager` | named agent | Merge after the four holds. Catalog `released`. Review-cycle count. Does not implement or review |
 | `post-merge-improver` | named agent | After merge, tighten skills/specs so the same miss cannot recur |
 
 ## Skills
@@ -186,7 +186,7 @@ Load the matching skill **before** the work.
 |-------|---------|------|
 | `spec-implementer` | **Resume** the same conversation for one spec | Implements criteria, opens the PR, addresses review. Does not review or merge |
 | `spec-reviewer` | **Fresh** every dispatch | Reviews the diff against the spec and `AGENTS.md`. Posts comments. Does not implement |
-| `release-manager` | **Fresh** | Merges after the three holds. Sets spec `released`. Does not implement or review |
+| `release-manager` | **Fresh** | Merges after the four holds. Sets spec `released`. Does not implement or review |
 | `post-merge-improver` | **Fresh** | After merge: harvest misses, one-home skill/spec fixes |
 
 ## Spec tree
@@ -198,7 +198,7 @@ Load the matching skill **before** the work.
 | Feature specs | `docs/specs/features/<slug>.md` | One vertical slice. Template: `_TEMPLATE.md` |
 | Hard decisions | `docs/adr/NNNN-slug.md` | Irreversible trade-offs only |
 | Procedures | `.agents/skills/*/SKILL.md` | How to write, test, review, and release |
-| Named agents | `.agents/agents/*/AGENT.md` | Fresh-context roles |
+| Named agents | `.agents/agents/*/AGENT.md` | Resume `spec-implementer` per spec; fresh `spec-reviewer`, `release-manager`, `post-merge-improver` |
 
 Product-specific system specs (architecture, business rules, design inventory, observability) live in the product when that product has them. This pack does not ship those files.
 
