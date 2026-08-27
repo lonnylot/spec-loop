@@ -28,7 +28,7 @@ Load `verification-before-completion`. Re-read; do not trust the orchestrator's 
 
 1. `spec-reviewer` verdict **Approve** on this HEAD (same-user `COMMENT` that says Approve counts). Leftover review threads that are not still blocking have `is_resolved: true`.
 2. Required GitHub checks green on this HEAD, or the repo has no product test scripts and no workflows (then there are no required checks). If workflows exist but check-runs are empty, do not merge (`github-ci-loop`).
-3. Spec status is `validated`. Re-run the product's documented test scripts on a worktree at this SHA in this turn; they exit 0. Skip that run only when there are no product test scripts (same carve-out as hold 2). Do not treat the implementer's Return as verification.
+3. Spec status is `validated`. Re-run the product's documented test scripts on a worktree at this SHA in this turn; they exit 0. If those scripts start a TCP server, bind a checkout-unique port (`playwright-e2e`). Skip that run only when there are no product test scripts (same carve-out as hold 2). Do not treat the implementer's Return as verification.
 4. The PR is mergeable onto current default (`mergeable` / `MERGEABLE`, or `git merge-tree` / GitHub reports no conflicts). If it is not: **do not merge**. Do not resolve production or spec-AC hunks. If a merge was started, abort it so the default branch is clean. Return `hold failed: unmergeable` and the conflicted paths. Completion: the orchestrator resumes `spec-implementer` to rebase onto default (`spec-implementer` Rebase onto default).
 
 If any hold fails: **do not merge**. Return which hold failed. Completion: the orchestrator can resume `spec-implementer` or re-dispatch `spec-reviewer` from that return.

@@ -26,7 +26,7 @@ When the file is a skill, also read [SKILL-MECHANICS.md](SKILL-MECHANICS.md).
 | Unmergeable PR / rebase onto default / merge conflict | `spec-implementer` (algorithm); `github-ci-loop` and `release-manager` fail closed |
 | After merge, learn from review | `post-merge-improvement`, `post-merge-improver` |
 | Two or more feat/ PRs at once | `parallel-feature-work`, `using-git-worktrees`, `releasing-a-spec` |
-| Playwright / flow CI | `playwright-e2e`, `testing` |
+| Playwright / flow CI / unique checkout port | `playwright-e2e`, `testing` |
 | Module / seam / adapter vocabulary | `codebase-design` |
 | Assumption vs acceptance criterion | `keeping-specs-current` |
 | Restated AC with leftover sections / leftover test title / leftover Restates / leftover locked claims in a restated system spec | `keeping-specs-current` |
