@@ -3,8 +3,9 @@ name: tdd-loop
 description: >
   Use when implementing any feature or bugfix, before writing production
   code, when adding an operator CLI or npm script that changes persisted
-  state, a host-path constructor, or when the user mentions TDD,
-  red-green-refactor, the build loop, or looping.
+  state, a host-path constructor, the orchestrator is about to write
+  production code, or when the user mentions TDD, red-green-refactor,
+  the build loop, or looping.
 ---
 
 # TDD loop
@@ -20,6 +21,8 @@ Write code before the test? Delete it. Start over. Do not keep it as reference. 
 ## When to use
 
 Always for features, fixes, and behavior changes. Exceptions only if the human says so: throwaway prototypes, generated code, config-only files. An operator CLI or npm script that changes persisted state is production code, not config-only.
+
+If this session is the orchestrator (`releasing-a-spec` dispatching agents), do not run this loop here — dispatch `.agents/agents/spec-implementer/AGENT.md`.
 
 ## Loop
 

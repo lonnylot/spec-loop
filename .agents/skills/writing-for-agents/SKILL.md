@@ -21,7 +21,9 @@ When the file is a skill, also read [SKILL-MECHANICS.md](SKILL-MECHANICS.md).
 | Domain terms, CONTEXT.md, ADR | `domain-modeling` |
 | Test layers or seams | `testing`, `tdd-loop` |
 | Commit / branch / PR / CI | `logical-commits`, `github-ci-loop` |
-| Review or release gate | `spec-review-loop`, `releasing-a-spec`, `spec-reviewer` |
+| Review or release gate | `spec-review-loop`, `releasing-a-spec`, `spec-reviewer`, `release-manager` |
+| Orchestrator vs implementer / no production code in the main session | `releasing-a-spec`, `spec-implementer` |
+| Unmergeable PR / rebase onto default / merge conflict | `spec-implementer` (algorithm); `github-ci-loop` and `release-manager` fail closed |
 | After merge, learn from review | `post-merge-improvement`, `post-merge-improver` |
 | Two or more feat/ PRs at once | `parallel-feature-work`, `using-git-worktrees`, `releasing-a-spec` |
 | Playwright / flow CI | `playwright-e2e`, `testing` |

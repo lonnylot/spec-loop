@@ -2,7 +2,7 @@
 
 Portable **spec-first agent workflow**: skills, named agents, and a spec-tree starter.
 
-Copy it into a product repo. Agents then take a feature from idea to `released` the same way every time: spec first, TDD, logical commits, CI, a separate reviewer, merge, then learn from the review.
+Copy it into a product repo. The **orchestrator** validates a spec, then dispatches a `spec-implementer` (all coding), a fresh `spec-reviewer`, and a `release-manager` (merge). Same implementer conversation is resumed for that spec until it ships. The orchestrator does not write production code.
 
 It is not a framework, a hosted service, or a stack. The product still owns its architecture, UI kit, telemetry, and domain rules.
 
@@ -11,7 +11,7 @@ It is not a framework, a hosted service, or a stack. The product still owns its 
 | Piece | Purpose |
 |-------|---------|
 | **Skills** (`.agents/skills/`) | Procedures the working agent loads: specs, TDD, commits, CI, review, tests, modules |
-| **Named agents** (`.agents/agents/`) | Fresh-context roles: `spec-reviewer`, `post-merge-improver` |
+| **Named agents** (`.agents/agents/`) | Resume `spec-implementer` per spec; fresh `spec-reviewer`, `release-manager`, `post-merge-improver` each dispatch |
 | **Always-on** (`AGENTS.md`) | Iron laws + skill index. Fill in the product one-liner |
 | **Spec tree** | `CONTEXT.md` stub, spec catalog, feature template, ADR home |
 
@@ -69,8 +69,9 @@ flowchart TD
   DRAFT --> COMPLETE
   COMPLETE -->|all boxes yes| VALID["Status → validated"]
 
-  VALID --> BRANCH["github-ci-loop<br/>feat/slug or fix/slug"]
-  BRANCH --> SLICE["tdd-loop"]
+  VALID --> WT1["using-git-worktrees<br/>orchestrator stays on default"]
+  WT1 --> IMP["Dispatch spec-implementer<br/>resume that conversation"]
+  IMP --> SLICE["tdd-loop"]
   SLICE --> RED["RED: failing test at the seam"]
   RED --> GREEN["GREEN: smallest code"]
   GREEN --> SYNC["Sync spec if the slice taught a tighter rule"]
@@ -92,8 +93,8 @@ flowchart TD
   DISPATCH --> REVIEWER["Named agent: spec-reviewer<br/>Spec axis + Rules axis"]
   REVIEWER --> VERDICT{"Verdict on this HEAD"}
 
-  VERDICT -->|Changes requested| RECEIVE["receiving-code-review"]
-  RECEIVE --> FIX["tdd-loop + logical-commits + push"]
+  VERDICT -->|Changes requested| RESUME["Resume spec-implementer"]
+  RESUME --> FIX["receiving-code-review<br/>tdd-loop + logical-commits + push"]
   FIX --> REPLY["Reply on each thread with fixing SHA<br/>implementer does NOT resolve"]
   REPLY --> CIWAIT["Wait for CI green"]
   CIWAIT --> DISPATCH
@@ -101,11 +102,12 @@ flowchart TD
   VERDICT -->|Approve| RESOLVE["Reviewer resolve_thread<br/>leftover notes is_resolved true"]
   RESOLVE --> THREE{"Approve on HEAD<br/>+ CI green<br/>+ release gate still green?"}
   THREE -->|no| DISPATCH
-  THREE -->|yes| MERGE["Merge PR"]
+  THREE -->|yes| RM["Dispatch release-manager"]
+  RM --> MERGE["Merge PR"]
   MERGE --> RELEASED["Catalog status → released"]
   RELEASED --> PMI["post-merge-improvement"]
   PMI --> IMPROVER["Named agent: post-merge-improver"]
-  IMPROVER --> LEARN["Count review cycles<br/>harvest misses<br/>fix the one home"]
+  IMPROVER --> LEARN["Harvest misses<br/>fix the one home"]
 ```
 
 ## Inside one criterion
@@ -130,20 +132,22 @@ flowchart TB
   OWNERS --> WAVE["Waves + merge-before list"]
   WAVE --> C1["Child A — worktree + feat/slug-a"]
   WAVE --> C2["Child B — worktree + feat/slug-b"]
-  C1 --> A1["releasing-a-spec → tdd-loop → PR → spec-review-loop"]
-  C2 --> A2["releasing-a-spec → tdd-loop → PR → spec-review-loop"]
-  A1 --> MERGEA["Merge in recorded wave order"]
-  A2 --> MERGEA
-  MERGEA --> REBASE["Remaining worktrees rebase onto default"]
+  C1 --> A1["spec-implementer → PR"]
+  C2 --> A2["spec-implementer → PR"]
+  A1 --> REV["parent: spec-review-loop"]
+  A2 --> REV
+  REV --> MERGEA["release-manager in recorded wave order"]
+  MERGEA --> REBASE["Resume remaining spec-implementers<br/>rebase onto default"]
 ```
 
 ## Who does what
 
 | Role | Skills / agents | Does |
 |------|-----------------|------|
-| Working agent | almost every skill | Write spec, tests, code, commits, PR |
-| `spec-reviewer` | named agent | Read spec + diff, comment, Approve or Changes requested. Does not implement |
-| Implementer on comments | `receiving-code-review` | Fix or push back. Reply with SHA. Never resolve threads |
+| Orchestrator | `releasing-a-spec`, `spec-review-loop` | Validate the spec with the user. Dispatch and resume agents. Does not write production code or merge |
+| `spec-implementer` | named agent | TDD, commits, PR, review fixes. One spec, one worktree, one conversation to resume |
+| `spec-reviewer` | named agent | Read spec + diff, comment, Approve or Changes requested. Fresh context every dispatch. Does not implement |
+| `release-manager` | named agent | Merge after the four holds. Catalog `released`. Review-cycle count. Does not implement or review |
 | `post-merge-improver` | named agent | After merge, tighten skills/specs so the same miss cannot recur |
 
 ## Skills
@@ -155,17 +159,17 @@ Load the matching skill **before** the work.
 | Skill | Reach for it when |
 |-------|-------------------|
 | `keeping-specs-current` | Any behavior change; suspected spec drift; leftover UI/Events/Assumptions after restating an AC |
-| `releasing-a-spec` | Handed a spec to implement, validate, or ship |
+| `releasing-a-spec` | Handed a spec to implement, validate, or ship; dispatch spec-implementer |
 | `writing-for-agents` | Editing `AGENTS.md`, skills, or named agents; a spec changed a procedure |
 | `tdd-loop` | Implementing or fixing; before production code |
 | `logical-commits` | A criterion is green; deciding whether / what to commit |
-| `github-ci-loop` | Starting work; branching; opening a PR; waiting on CI |
-| `spec-review-loop` | PR exists; merge/release |
+| `github-ci-loop` | Starting work; branching; opening a PR; waiting on CI; unmergeable PR |
+| `spec-review-loop` | PR exists; resume implementer for review fixes; dispatch release-manager |
 | `receiving-code-review` | Reviewer or human left comments |
 | `post-merge-improvement` | PR just merged; learn from review into skills/docs |
 | `verification-before-completion` | About to claim done, green, fixed, or released |
 | `parallel-feature-work` | Two or more feature specs at once |
-| `using-git-worktrees` | Isolated checkout for a parallel agent |
+| `using-git-worktrees` | Dispatch spec-implementer; isolated checkout |
 
 ### Engineering
 
@@ -178,12 +182,12 @@ Load the matching skill **before** the work.
 
 ## Named agents
 
-Spawn these in a **fresh** context. Do not share the implementer's reasoning.
-
-| Agent | Does |
-|-------|------|
-| `spec-reviewer` | Reviews the diff against the spec and `AGENTS.md`. Posts comments. Does not implement |
-| `post-merge-improver` | After merge: review-cycle count, harvest misses, one-home skill/spec fixes |
+| Agent | Context | Does |
+|-------|---------|------|
+| `spec-implementer` | **Resume** the same conversation for one spec | Implements criteria, opens the PR, addresses review. Does not review or merge |
+| `spec-reviewer` | **Fresh** every dispatch | Reviews the diff against the spec and `AGENTS.md`. Posts comments. Does not implement |
+| `release-manager` | **Fresh** | Merges after the four holds. Sets spec `released`. Does not implement or review |
+| `post-merge-improver` | **Fresh** | After merge: harvest misses, one-home skill/spec fixes |
 
 ## Spec tree
 
@@ -194,7 +198,7 @@ Spawn these in a **fresh** context. Do not share the implementer's reasoning.
 | Feature specs | `docs/specs/features/<slug>.md` | One vertical slice. Template: `_TEMPLATE.md` |
 | Hard decisions | `docs/adr/NNNN-slug.md` | Irreversible trade-offs only |
 | Procedures | `.agents/skills/*/SKILL.md` | How to write, test, review, and release |
-| Named agents | `.agents/agents/*/AGENT.md` | Fresh-context roles |
+| Named agents | `.agents/agents/*/AGENT.md` | Resume `spec-implementer` per spec; fresh `spec-reviewer`, `release-manager`, `post-merge-improver` |
 
 Product-specific system specs (architecture, business rules, design inventory, observability) live in the product when that product has them. This pack does not ship those files.
 

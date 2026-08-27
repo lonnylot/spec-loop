@@ -28,17 +28,17 @@ Do **not** parallelize when one spec's acceptance criteria name the other's UI o
 
 3. **Waves.** Later slices that compose earlier UI wait until those PRs merge. Completion: each wave's merge-before list is explicit.
 
-4. **Dispatch.** For each independent spec: `using-git-worktrees`, then a fresh-context agent seeded with `releasing-a-spec` plus the spec path, task statement, file owners, and "do not edit another agent's paths." Each child opens its own `feat/<slug>` PR and runs `spec-review-loop`. Completion: one PR number per spec.
+4. **Dispatch.** For each independent spec: `using-git-worktrees`, then `.agents/agents/spec-implementer/AGENT.md` with the spec path, task statement, worktree path, file owners, and "do not edit another agent's paths." Resume that child for review fixes. The parent runs `spec-review-loop` and dispatches `release-manager` per PR. Completion: one PR number per spec.
 
-5. **Catalog and shared specs.** Children update only their `docs/specs/features/<slug>.md`. The parent (or the first merge) updates `docs/specs/README.md` status flips after each merge. Two children must not both rewrite the same system spec hunk — put the shared rule in before dispatch. Completion: `git diff` on each PR does not fight over the same catalog lines.
+5. **Catalog and shared specs.** Children update only their `docs/specs/features/<slug>.md`. Catalog `released` flips are `release-manager` only. Two children must not both rewrite the same system spec hunk — put the shared rule in before dispatch. Completion: `git diff` on each PR does not fight over the same catalog or system-spec lines.
 
-6. **Integrate.** Merge in the wave's recorded order. After each merge, remaining worktrees rebase onto default. Then the next wave. Completion: every slug is `released` or still queued.
+6. **Integrate.** Dispatch `release-manager` in the wave's recorded order. After each merge, **resume** each remaining `spec-implementer` to rebase onto default (that agent's Rebase onto default). The orchestrator does not rebase production in its tree. Then the next wave. Completion: every remaining Return has a new HEAD on current default, or that slug is `released`.
 
 ## Rationalizations
 
 | Excuse | Reality |
 |--------|---------|
 | "Four agents, four checkouts of main in one dir" | That is one dirty tree. Worktrees. |
-| "They can both bump the catalog" | They will conflict. Parent owns the index. |
+| "They can both bump the catalog" | They will conflict. Children do not edit the catalog; `release-manager` owns the `released` flip. |
 | "The later flow can start now and fill in the seam later" | The flow criterion names that seam. Wait or split the spec. |
 | "I'll draft the sibling spec on this feat/" | One PR number per spec. Open `feat/<other>`. |

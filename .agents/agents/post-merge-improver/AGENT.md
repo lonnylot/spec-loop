@@ -1,9 +1,8 @@
 ---
 name: post-merge-improver
 description: >
-  Use when a pull request has just merged. Reads review feedback, updates
-  the PR description with review-cycle count, and implements skill and
-  spec fixes so the same miss cannot recur.
+  Use when a pull request has just merged. Reads review feedback and
+  implements skill and spec fixes so the same miss cannot recur.
 ---
 
 # Post-merge improver
@@ -20,12 +19,7 @@ Stop if the merged PR only touches `.agents/`, `AGENTS.md`, or spec wording with
 
 ## 1. Review-cycle count
 
-Count spec-reviewer submissions whose body has a Verdict of Changes requested or Approve (each is one cycle). A same-user `COMMENT` that says treat it as Changes requested or Approve counts. Empty-body thread replies do not. Append to the PR body — do not replace existing text. If `## Review cycles` is already present with a wrong count, correct the numbers:
-
-```
-## Review cycles
-N (X Changes requested, Y Approve)
-```
+Confirm `release-manager` already wrote `## Review cycles` on the PR body. Do not append or correct the count. If it is missing, stop and return that.
 
 ## 2. Harvest misses
 
