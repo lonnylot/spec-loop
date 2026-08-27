@@ -35,7 +35,7 @@ PR body names:
 2. Create or update the PR with `gh` if present; otherwise the harness GitHub integration.
 3. Watch checks (`gh pr checks` or the PR status). Completion: every required check is green on **this** HEAD, or you have a failing log.
 4. If the PR has no check runs and `.github/workflows/` exists, read `on:` and permissions before an empty retrigger commit. Fix the workflow so checks start. Empty commit + close/reopen is last resort and is not a logical commit for a criterion. Completion: `gh pr checks` lists runs. If workflows are missing, the next paragraph applies.
-5. Red CI: treat the failure as a failing test. Reproduce, `tdd-loop`, `logical-commits`, push. Re-watch the whole suite.
+5. Red CI: resume `spec-implementer`. That agent treats the failure as a failing test (`tdd-loop`, `logical-commits`, push). The orchestrator does not run `tdd-loop`. Completion: the implementer's Return has a new HEAD SHA, or `need-user`. Re-watch the whole suite on that SHA.
 
 If `.github/workflows/` is missing, add a workflow that runs the product's typecheck, test, and build scripts on `pull_request` and on pushes to the default branch **before** you claim CI is a gate. Do not invent script names — read `package.json` (or the equivalent).
 
@@ -54,6 +54,7 @@ If the PR is unmergeable onto default, resume `spec-implementer` to rebase (`spe
 | "CI is flaky, merge anyway" | Quarantine with a failing test or fix the workflow. |
 | "No checks; empty commit to retrigger" | Read `on:` and permissions first. Empty commit is last resort, not a criterion. |
 | "I'll resolve the conflict in this session" | Resume `spec-implementer`. Rebase is coding. |
+| "I'll fix red CI in this session" | Resume `spec-implementer`. `tdd-loop` is coding. |
 
 ## Tooling
 
