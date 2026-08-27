@@ -34,9 +34,9 @@ Do **not** parallelize when one spec's acceptance criteria name the other's UI o
 
 5. **Catalog and shared specs.** Children update only their `docs/specs/features/<slug>.md`. Catalog `released` flips are `release-manager` only. Two children must not both rewrite the same system spec hunk — put the shared rule in before dispatch. Completion: `git diff` on each PR does not fight over the same catalog or system-spec lines.
 
-6. **Integrate.** One **current integrate** at a time, in the wave's recorded order.
+6. **Integrate.** One **current integrate** at a time.
 
-The first slug in the list is current. If that PR is MERGEABLE, skip rebase. Else resume **only** that `spec-implementer` to rebase onto default, tests, and CI (that agent's Rebase onto default). Conflict hunks: fresh `spec-reviewer` on that PR (`spec-review-loop`). Dispatch `release-manager` on **that PR only**. Stop. When that merge SHA exists, the next slug is current. Repeat. When every slug in this wave has a merge SHA, the next wave.
+**Current integrate** is the first slug in the wave's recorded order that does **not** have a merge SHA. If that PR is MERGEABLE, skip rebase. Else resume **only** that `spec-implementer` to rebase onto default, tests, and CI (that agent's Rebase onto default). Conflict hunks: fresh `spec-reviewer` on that PR (`spec-review-loop`). Dispatch `release-manager` on **that PR only**. Stop. When that merge SHA exists, re-select current. Repeat. When every slug in this wave has a merge SHA, the next wave.
 
 The orchestrator does not rebase production in its tree. Completion: a merge SHA for the current slug, or `need-user`. A second `release-manager` or a second rebase while that is false is unfinished.
 

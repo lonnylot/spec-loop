@@ -136,7 +136,7 @@ flowchart TB
   C2 --> A2["spec-implementer → PR"]
   A1 --> REV["parent: spec-review-loop"]
   A2 --> REV
-  REV --> INTEG["Current integrate: next in wave list"]
+  REV --> INTEG["Current integrate: first slug without a merge SHA"]
   INTEG --> NEXT["Resume only that implementer<br/>MERGEABLE skips rebase"]
   NEXT --> RM["release-manager on that PR only"]
   RM -->|merge SHA exists| INTEG
