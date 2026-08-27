@@ -4,7 +4,8 @@ description: >
   Use when two or more feature specs may proceed at once, when adding a
   second feature spec file or README catalog row on a feat/ already
   implementing another slug, when dispatching separate implementer
-  agents, or when deciding merge order across open feat/ PRs.
+  agents, when deciding merge order across open feat/ PRs, or when
+  integrating the next-in-line slug after a merge SHA exists.
 ---
 
 # Parallel feature work
@@ -17,6 +18,7 @@ One validated spec per agent, per branch, per worktree. The parent coordinates. 
 - Two specs do not share a required merge-before relationship
 - You are about to `releasing-a-spec` more than one slug this session
 - Adding `docs/specs/features/<other>.md` or a second README catalog row on a `feat/` that already implements another slug
+- A wave PR has a merge SHA and another slug in that wave is still open
 
 Do **not** parallelize when one spec's acceptance criteria name the other's UI or seam.
 
@@ -32,7 +34,11 @@ Do **not** parallelize when one spec's acceptance criteria name the other's UI o
 
 5. **Catalog and shared specs.** Children update only their `docs/specs/features/<slug>.md`. Catalog `released` flips are `release-manager` only. Two children must not both rewrite the same system spec hunk — put the shared rule in before dispatch. Completion: `git diff` on each PR does not fight over the same catalog or system-spec lines.
 
-6. **Integrate.** Dispatch `release-manager` in the wave's recorded order. After each merge, **resume** each remaining `spec-implementer` to rebase onto default (that agent's Rebase onto default). The orchestrator does not rebase production in its tree. Then the next wave. Completion: every remaining Return has a new HEAD on current default, or that slug is `released`.
+6. **Integrate.** One **current integrate** at a time, in the wave's recorded order.
+
+The first slug in the list is current. If that PR is MERGEABLE, skip rebase. Else resume **only** that `spec-implementer` to rebase onto default, tests, and CI (that agent's Rebase onto default). Conflict hunks: fresh `spec-reviewer` on that PR (`spec-review-loop`). Dispatch `release-manager` on **that PR only**. Stop. When that merge SHA exists, the next slug is current. Repeat. When every slug in this wave has a merge SHA, the next wave.
+
+The orchestrator does not rebase production in its tree. Completion: a merge SHA for the current slug, or `need-user`. A second `release-manager` or a second rebase while that is false is unfinished.
 
 ## Rationalizations
 
@@ -42,3 +48,4 @@ Do **not** parallelize when one spec's acceptance criteria name the other's UI o
 | "They can both bump the catalog" | They will conflict. Children do not edit the catalog; `release-manager` owns the `released` flip. |
 | "The later flow can start now and fill in the seam later" | The flow criterion names that seam. Wait or split the spec. |
 | "I'll draft the sibling spec on this feat/" | One PR number per spec. Open `feat/<other>`. |
+| "I'll rebase all remaining, then merge 3–20" | One current integrate. Resume that implementer only; MERGEABLE skips rebase; `release-manager` on that PR only. |

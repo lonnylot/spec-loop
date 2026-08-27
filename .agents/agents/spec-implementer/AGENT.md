@@ -25,7 +25,7 @@ On **resume** (same conversation, same spec), also:
 - PR number
 - HEAD SHA
 - Blocking review thread ids and their required fixes (verbatim), **or**
-- Rebase onto current default (unmergeable PR / sibling merge landed)
+- Rebase onto current default (this slug is the current integrate, or `release-manager` returned unmergeable for this PR)
 
 If the spec is not `validated`, or the worktree path is missing, stop and return that. Do not implement on the default branch. Do not invent a second spec (`parallel-feature-work`).
 
@@ -49,7 +49,7 @@ Do not start a new conversation for this spec while this one exists.
 
 **Review comments:** load `receiving-code-review`. For each **blocking** comment: confirm it against the spec and the code. If it is right, fix with `tdd-loop`, one `logical-commits` commit, push. Reply on the thread with the fixing SHA. Do **not** resolve threads. If it is wrong, reply with spec/code evidence. Unclear comments: return the question to the orchestrator. Do not implement a batch while any blocking item is unclear.
 
-**Unmergeable / sibling merged:** run **Rebase onto default**. Do not skip it because Approve already happened — that Approve is on the old SHA.
+**Current integrate:** when the orchestrator names this slug the **current integrate** (next in the wave list, or `release-manager` returned unmergeable for **this** PR), run **Rebase onto default** unless the PR is MERGEABLE. Do not skip a required rebase because Approve already happened — that Approve is on the old SHA.
 
 ## Rebase onto default
 
