@@ -25,7 +25,7 @@ When the file is a skill, also read [SKILL-MECHANICS.md](SKILL-MECHANICS.md).
 | Orchestrator vs implementer / no production code in the main session | `releasing-a-spec`, `spec-implementer` |
 | Unmergeable PR / rebase onto default / merge conflict | `spec-implementer` (algorithm); `github-ci-loop` and `release-manager` fail closed |
 | After merge, learn from review | `post-merge-improvement`, `post-merge-improver` |
-| Two or more feat/ PRs at once | `parallel-feature-work`, `using-git-worktrees`, `releasing-a-spec` |
+| Two or more feat/ PRs at once; next-in-line / one current integrate | `parallel-feature-work`, `using-git-worktrees`, `releasing-a-spec` |
 | Playwright / flow CI / unique checkout port | `playwright-e2e`, `testing` |
 | Module / seam / adapter vocabulary | `codebase-design` |
 | Assumption vs acceptance criterion | `keeping-specs-current` |

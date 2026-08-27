@@ -136,8 +136,10 @@ flowchart TB
   C2 --> A2["spec-implementer → PR"]
   A1 --> REV["parent: spec-review-loop"]
   A2 --> REV
-  REV --> MERGEA["release-manager in recorded wave order"]
-  MERGEA --> REBASE["Resume remaining spec-implementers<br/>rebase onto default"]
+  REV --> INTEG["Current integrate: first slug without a merge SHA"]
+  INTEG --> NEXT["Resume only that implementer<br/>MERGEABLE skips rebase"]
+  NEXT --> RM["release-manager on that PR only"]
+  RM -->|merge SHA exists| INTEG
 ```
 
 ## Who does what
@@ -168,7 +170,7 @@ Load the matching skill **before** the work.
 | `receiving-code-review` | Reviewer or human left comments |
 | `post-merge-improvement` | PR just merged; learn from review into skills/docs |
 | `verification-before-completion` | About to claim done, green, fixed, or released |
-| `parallel-feature-work` | Two or more feature specs at once |
+| `parallel-feature-work` | Two or more feature specs at once; next-in-line integrate |
 | `using-git-worktrees` | Dispatch spec-implementer; isolated checkout |
 
 ### Engineering
