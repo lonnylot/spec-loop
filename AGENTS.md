@@ -55,7 +55,7 @@ Load the matching skill **before** the work. Do not re-derive the procedure from
 | `codebase-design` | Module shape, seam, adapter, depth |
 | `testing` | Test placement, seams, mapping criteria, weaker-reading fixtures, early-return "and" that should stay one criterion |
 | `tdd-loop` | Implementing or fixing; before production code; host-path constructor; orchestrator about to write production code |
-| `logical-commits` | A criterion is green; deciding whether / what to commit; reconstruct after tests-after |
+| `logical-commits` | A criterion is green; deciding whether / what to commit; reconstruct after tests-after in the TDD slice; review-thread commit |
 | `github-ci-loop` | Starting work; branching; opening a PR; waiting on CI; checks never started; unmergeable PR; rebase onto default |
 | `spec-review-loop` | PR exists; merge/release; resume after context compaction; rebase voids Approve |
 | `post-merge-improvement` | PR just merged; learn from review into skills/docs |
