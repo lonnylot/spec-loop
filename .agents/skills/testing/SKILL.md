@@ -35,7 +35,7 @@ A criterion that names a screen, "shows", or "lists" is proven at the app or flo
 
 ## Steps
 
-1. **Quote the criterion.** Open the spec. Write the test name as the criterion. If that name contains "and" (any case) or independent env/branch cases, split into one `it` each — only when the cases are independently revertible production (status vs content-type vs body; membership 404 vs happy path). Do not split an early-return reject (returns 400 and does not insert / does not put / leaves version N) into separate ACs if they share one production path: those are one criterion. If the next AC would be green without new production, fold the proof into this commit or do not split the bullet (`logical-commits`). The assertion must fail a weaker implementation of those words.
+1. **Quote the criterion.** Open the spec. Write the test name as the criterion. If that name contains "and" (any case) or independent env/branch cases, split into one `it` each — only when the cases are independently revertible production (status vs content-type vs body; membership 404 vs happy path). Do not split an early-return reject (returns 400 and does not insert / does not put / leaves version N) into separate ACs if they share one production path: those are one criterion. Leftover checked ACs that share that path stay one criterion — unsplit; do not require a commit per checkbox (`logical-commits`). If the next AC would be green without new production, fold the proof into this commit or do not split the bullet (`logical-commits`). The assertion must fail a weaker implementation of those words.
 
    Weaker readings this step exists to catch:
 
