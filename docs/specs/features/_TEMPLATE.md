@@ -38,4 +38,4 @@ Explicit non-goals.
 
 ## Restates
 
-Released specs whose bullets this change rewrites. Listing a path without rewriting that file is unfinished. When Restates names a system spec, leftover locked claims this HEAD does not implement are rewritten or given ACs (`keeping-specs-current`).
+Every spec this HEAD rewrote, including a draft architecture (or any system spec) that still assigns look/token/CSS ownership. Listing a path without rewriting that file is unfinished. When Restates names a system spec, leftover locked claims this HEAD does not implement are rewritten or given ACs (`keeping-specs-current`).

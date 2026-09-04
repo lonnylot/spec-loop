@@ -160,7 +160,7 @@ Load the matching skill **before** the work.
 
 | Skill | Reach for it when |
 |-------|-------------------|
-| `keeping-specs-current` | Any behavior change; suspected spec drift; leftover UI/Events/Assumptions after restating an AC |
+| `keeping-specs-current` | Any behavior change; suspected spec drift; leftover Problem/UI/Events/Assumptions after restating an AC |
 | `releasing-a-spec` | Handed a spec to implement, validate, or ship; dispatch spec-implementer |
 | `writing-for-agents` | Editing `AGENTS.md`, skills, or named agents; a spec changed a procedure |
 | `tdd-loop` | Implementing or fixing; before production code |

@@ -29,7 +29,7 @@ When the file is a skill, also read [SKILL-MECHANICS.md](SKILL-MECHANICS.md).
 | Playwright / flow CI / unique checkout port | `playwright-e2e`, `testing` |
 | Module / seam / adapter vocabulary | `codebase-design` |
 | Assumption vs acceptance criterion | `keeping-specs-current` |
-| Restated AC with leftover sections / leftover test title / leftover Restates / leftover locked claims in a restated system spec | `keeping-specs-current` |
+| Restated AC with leftover Problem or leftover sections / leftover test title / leftover Restates / leftover locked claims in a restated system spec | `keeping-specs-current` |
 | Domain terms line without a `CONTEXT.md` entry | `keeping-specs-current`, `domain-modeling` |
 | Independently revertible ACs / grouping by screen / spec-only / reconstruct after tests-after in the TDD slice / review-thread or CI-fix commit on HEAD / unsplit leftover checkboxes | `logical-commits` |
 | Extra visible chrome without an AC | `keeping-specs-current` |
