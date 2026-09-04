@@ -7,8 +7,10 @@ description: >
   commit, when leftover checkboxes share one production path, when a
   spec-only commit lists every AC, reconstruct after tests-after
   already landed in the TDD slice, when a review-thread or CI-fix
-  commit would land on HEAD, or when a dedicated test or Playwright
-  flow would land after its production in that slice.
+  commit would land on HEAD, when a dedicated test or Playwright
+  flow would land after its production in that slice, when one look
+  pass per named screen, when one stylesheet several named screens
+  mount, or when viewport meta is copied onto sibling HTML.
 ---
 
 # Logical commits
@@ -20,7 +22,8 @@ One commit is one finished thought: one spec criterion (or one review/CI fix) wi
 - A `tdd-loop` criterion is GREEN and the spec matches the code
 - A single review thread or a single CI cause is fixed and green
 - Spec status flip (`validated` / `released`) after the gate that allows it
-- One production change several named screens mount, plus the shell it left — splitting those routes is empty / tests-after
+- One production change several named screens mount, plus the shell it left — splitting those routes is empty / tests-after. Viewport meta copied onto sibling HTML is that shell, not extra chrome (`look-loop`)
+- One look pass per named screen, or one stylesheet several named screens mount (`look-loop`)
 - Leftover checked ACs that share one production path (`testing`) — fold into the commit that made them true
 
 ## When not to commit
@@ -57,6 +60,7 @@ Prefer conventional prefixes (`feat`, `fix`, `docs`, `test`, `refactor`, `chore`
 | "Checkpoint before I forget" | Unfinished slices are not logical. Finish GREEN, then commit. |
 | "Spec in a follow-up commit" | Same-commit spec update is the iron law. |
 | "One screen is one commit" | Grouping by screen is the miss. Split independently revertible ACs. |
+| "Look of three screens is one commit" | One look pass per named screen, unless one stylesheet several named screens mount (`look-loop`). |
 | "Spec first, then one feat" | Spec hunk lands with the first production that implements it. |
 | "I'll fold tests-after in a follow-up on top of HEAD" (TDD slice) | Reconstruct into the production commit. A follow-up cannot un-do tests-after in this slice. |
 | "Reconstruct the review test into the feat commit" | After the PR is open, one review/CI commit on HEAD is the slice. The ship unit is the PR three-dot diff. |
@@ -64,4 +68,4 @@ Prefer conventional prefixes (`feat`, `fix`, `docs`, `test`, `refactor`, `chore`
 
 ## Red flags
 
-Empty or "WIP" messages on a PR. Default-branch commits for a feature. Code committed without the spec hunk that describes it. Dedicated tests in a follow-up commit after the production that needed them in the TDD slice. Reconstructing a review-thread or CI-fix commit into an earlier AC commit. One commit that ships several independent ACs together. A commit subject that names two new ACs with "and" when each has unique production. N empty-production commits for leftover checkboxes that share one production path. Spec-only then one feat. Grouped by screen.
+Empty or "WIP" messages on a PR. Default-branch commits for a feature. Code committed without the spec hunk that describes it. Dedicated tests in a follow-up commit after the production that needed them in the TDD slice. Reconstructing a review-thread or CI-fix commit into an earlier AC commit. One commit that ships several independent ACs together. A commit subject that names two new ACs with "and" when each has unique production. N empty-production commits for leftover checkboxes that share one production path. Spec-only then one feat. Grouped by screen. Several look passes in one commit when each named screen is its own pass.

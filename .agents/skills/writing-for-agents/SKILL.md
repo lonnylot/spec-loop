@@ -31,7 +31,7 @@ When the file is a skill, also read [SKILL-MECHANICS.md](SKILL-MECHANICS.md).
 | Assumption vs acceptance criterion | `keeping-specs-current` |
 | Restated AC with leftover Problem or leftover sections / leftover test title / leftover Restates / leftover locked claims in a restated system spec | `keeping-specs-current` |
 | Domain terms line without a `CONTEXT.md` entry | `keeping-specs-current`, `domain-modeling` |
-| Independently revertible ACs / grouping by screen / spec-only / reconstruct after tests-after in the TDD slice / review-thread or CI-fix commit on HEAD / unsplit leftover checkboxes | `logical-commits` |
+| Independently revertible ACs / grouping by screen / spec-only / reconstruct after tests-after in the TDD slice / review-thread or CI-fix commit on HEAD / unsplit leftover checkboxes / look pass per named screen / viewport meta on sibling HTML | `logical-commits` |
 | Extra visible chrome without an AC | `keeping-specs-current` |
 | Look of named screens / visual-design / computed CSS in a feature spec / extra heading during look | `look-loop` |
 | How agents write docs | this skill |
