@@ -51,6 +51,10 @@ Read the spec (or write `docs/specs/features/<slug>.md` from `_TEMPLATE.md` and 
 
 If a box is no: revise the spec with the user (or a written assumption they accept). Status stays `draft`. Completion: all boxes yes → set status `validated` and update `docs/specs/README.md`. Do not commit that validated file as a spec-only dump of every AC (`logical-commits`). The spec hunk (checkboxes, restates) lands with the first production that implements it.
 
+### 2b. Look-may-grow
+
+Look-may-grow skipping a *new* validate applies only to extra look chrome on a spec the user already Validated (`look-loop`). Still `spec-review-loop` after the first green commit; merge is still `release-manager`.
+
 ### 3. Isolate and dispatch
 
 Stay on the default branch. Create a worktree on `feat/<slug>` (`using-git-worktrees`). Write the validated spec (and catalog row) in that worktree if those files are not already there. Do **not** commit a spec-only dump of every AC (`logical-commits`).

@@ -160,7 +160,7 @@ Load the matching skill **before** the work.
 
 | Skill | Reach for it when |
 |-------|-------------------|
-| `keeping-specs-current` | Any behavior change; suspected spec drift; leftover UI/Events/Assumptions after restating an AC |
+| `keeping-specs-current` | Any behavior change; suspected spec drift; leftover Problem/UI/Events/Assumptions after restating an AC |
 | `releasing-a-spec` | Handed a spec to implement, validate, or ship; dispatch spec-implementer |
 | `writing-for-agents` | Editing `AGENTS.md`, skills, or named agents; a spec changed a procedure |
 | `tdd-loop` | Implementing or fixing; before production code |
@@ -179,6 +179,7 @@ Load the matching skill **before** the work.
 |-------|-------------------|
 | `testing` | Placing tests, choosing seams, mapping criteria, catching a weaker-reading fixture |
 | `playwright-e2e` | Browser user flows, flow CI job, test-server fakes, unique checkout port for flow tests |
+| `look-loop` | Look of named screens; screenshot-and-iterate; computed CSS in a feature spec; extra heading during look |
 | `codebase-design` | Module shape, seam, adapter, depth |
 | `domain-modeling` | New or conflicting domain term; `CONTEXT.md`; ADR |
 

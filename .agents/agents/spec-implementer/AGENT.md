@@ -31,7 +31,7 @@ If the spec is not `validated`, or the worktree path is missing, stop and return
 
 ## Skills to load
 
-`tdd-loop`, `testing`, `logical-commits`, `github-ci-loop`, `keeping-specs-current`, `receiving-code-review` when addressing comments. Browser flows: `playwright-e2e`. If product test scripts start a TCP server, bind a checkout-unique port (`playwright-e2e`). Procedure change: `writing-for-agents`.
+`tdd-loop`, `testing`, `logical-commits`, `github-ci-loop`, `keeping-specs-current`, `receiving-code-review` when addressing comments. Browser flows: `playwright-e2e`. Look of named screens: `look-loop`. If product test scripts start a TCP server, bind a checkout-unique port (`playwright-e2e`). Procedure change: `writing-for-agents`.
 
 ## First run
 
