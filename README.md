@@ -179,6 +179,7 @@ Load the matching skill **before** the work.
 |-------|-------------------|
 | `testing` | Placing tests, choosing seams, mapping criteria, catching a weaker-reading fixture |
 | `playwright-e2e` | Browser user flows, flow CI job, test-server fakes, unique checkout port for flow tests |
+| `look-loop` | Look of named screens; screenshot-and-iterate; computed CSS in a feature spec; extra heading during look |
 | `codebase-design` | Module shape, seam, adapter, depth |
 | `domain-modeling` | New or conflicting domain term; `CONTEXT.md`; ADR |
 

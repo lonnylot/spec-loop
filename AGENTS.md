@@ -65,8 +65,9 @@ Load the matching skill **before** the work. Do not re-derive the procedure from
 | `parallel-feature-work` | Two or more feature specs at once; separate implementer agents; next-in-line integrate |
 | `using-git-worktrees` | Dispatch spec-implementer; isolated checkout for a feat/ branch; parallel agents |
 | `playwright-e2e` | Browser user flows; flow CI job; test-server fakes; empty-state reset between files; unique checkout port for flow tests |
+| `look-loop` | Look of named screens; screenshot-and-iterate; computed CSS in a feature spec; extra heading/image/landmark/static page during look; brand tokens or a11y during look |
 
-Handed a spec, or asked to implement/ship: `releasing-a-spec` (orchestrator). Two or more specs this session, or next-in-line integrate: `parallel-feature-work` first. Implementing any slice: dispatch `.agents/agents/spec-implementer/AGENT.md` (`tdd-loop` lives there). Isolated tree: `using-git-worktrees` for every implementer. Ready to review: `spec-review-loop` (fresh `spec-reviewer` every dispatch; resume the implementer on Changes requested). Ready to merge: dispatch `.agents/agents/release-manager/AGENT.md`. After merge: `post-merge-improvement`. Browser flow tests: `playwright-e2e`. Spec changed a procedure: `writing-for-agents`.
+Handed a spec, or asked to implement/ship: `releasing-a-spec` (orchestrator). Two or more specs this session, or next-in-line integrate: `parallel-feature-work` first. Implementing any slice: dispatch `.agents/agents/spec-implementer/AGENT.md` (`tdd-loop` lives there). Isolated tree: `using-git-worktrees` for every implementer. Ready to review: `spec-review-loop` (fresh `spec-reviewer` every dispatch; resume the implementer on Changes requested). Ready to merge: dispatch `.agents/agents/release-manager/AGENT.md`. After merge: `post-merge-improvement`. Browser flow tests: `playwright-e2e`. Look of named screens: `look-loop`. Spec changed a procedure: `writing-for-agents`.
 
 ## GitHub loop (summary)
 

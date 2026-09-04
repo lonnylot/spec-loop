@@ -33,6 +33,7 @@ When the file is a skill, also read [SKILL-MECHANICS.md](SKILL-MECHANICS.md).
 | Domain terms line without a `CONTEXT.md` entry | `keeping-specs-current`, `domain-modeling` |
 | Independently revertible ACs / grouping by screen / spec-only / reconstruct after tests-after in the TDD slice / review-thread or CI-fix commit on HEAD / unsplit leftover checkboxes | `logical-commits` |
 | Extra visible chrome without an AC | `keeping-specs-current` |
+| Look of named screens / visual-design / computed CSS in a feature spec / extra heading during look | `look-loop` |
 | How agents write docs | this skill |
 | Product architecture / UI kit / telemetry / domain rules | the product skill that owns that fact — add a row here when you add that skill |
 
